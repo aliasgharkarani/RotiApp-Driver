@@ -55,25 +55,29 @@ export default class CompletedOrders extends Component {
                                 <Card style={{ flex: 0 }}>
                                     <CardItem>
                                         <Left>
-                                            <Thumbnail source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/sugarandspice-34c66.appspot.com/o/logo.jpeg?alt=media&token=a312edfb-6a2e-48a2-a00d-b0da7e6c08dd' }} />
                                             <Body>
-                                                <Text>{data.OrderNo}</Text>
-                                                <Text note>{data.OrderData}</Text>
+                                                <Text>
+                                                    Order Driver: {data.OrderDriver}
+                                                </Text>
+                                                <Text>
+                                                    Order Status: {data.OrderStatus}
+                                                </Text>
                                             </Body>
                                         </Left>
                                     </CardItem>
                                     <CardItem>
                                         <Body>
-                                            <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/sugarandspice-34c66.appspot.com/o/posts%2Fbiryani.jpg?alt=media&token=1683cab5-2fbf-4d06-b155-4ff570ab7b77' }} style={{ height: 200, width: 200, flex: 1 }} />
-                                            <Text>
-                                                {data.OrderDetails}-{data.OrderStatus}
-                                            </Text>
+                                            {data.OrderItems && data.OrderItems.map((d, i) => {
+                                                return (
+                                                    <Text>Name:{d.name} - Quantity:{d.quantity} - Price:{d.price}</Text>
+                                                )
+                                            })}
                                         </Body>
                                     </CardItem>
                                     <CardItem>
                                         <Left>
                                             <Button transparent textStyle={{ color: '#87838B' }}>
-                                                {/* <Icon name="logo-github" /> */}
+                                                <Icon name="logo-github" />
                                             </Button>
                                         </Left>
                                     </CardItem>

@@ -46,22 +46,22 @@ export default class InProcessOrders extends Component {
         }
         ).catch(error => alert("No Orders"));
     }
-    Accepted(ide, Cancel, SNo, OrderStatus, OrderData, OrderNo, OrderDetails, OrderRestaurant) {
-        let payload = {
-            "Cancel": Cancel,
-            "SNo": `${SNo}`,
-            "OrderStatus": "DeliveryStarted",
-            "OrderData": `${OrderData}`,
-            "OrderNo": `${OrderNo}`,
-            "OrderDetails": `${OrderDetails}`,
-            "OrderRestaurant": `${OrderRestaurant}`
-        }
-        fetch(`https://rotiappp.herokuapp.com/api/orders/${ide}`, {
+    Accepted(data) {
+        // let payload = {
+        //     "Cancel": Cancel,
+        //     "SNo": `${SNo}`,
+        //     "OrderStatus": "Delivered",
+        //     "OrderData": `${OrderData}`,
+        //     "OrderNo": `${OrderNo}`,
+        //     "OrderDetails": `${OrderDetails}`,
+        //     "OrderRestaurant": `${OrderRestaurant}`
+        // }
+        fetch(`https://dry-coast-84806.herokuapp.com/api/orders/${data._id}/Delivered`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(payload)
+            // body: JSON.stringify(payload)
         }).then(function (response) {
         }).then(data => this.Get()
         ).catch(error => alert(error));
@@ -76,25 +76,29 @@ export default class InProcessOrders extends Component {
                                 <Card style={{ flex: 0 }}>
                                     <CardItem>
                                         <Left>
-                                            <Thumbnail source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/sugarandspice-34c66.appspot.com/o/logo.jpeg?alt=media&token=a312edfb-6a2e-48a2-a00d-b0da7e6c08dd' }} />
                                             <Body>
-                                                <Text>{data.OrderNo}</Text>
-                                                <Text note>{data.OrderData}</Text>
+                                                <Text>
+                                                    Order Driver: {data.OrderDriver}
+                                                </Text>
+                                                <Text>
+                                                    Order Status: {data.OrderStatus}
+                                                </Text>
                                             </Body>
                                         </Left>
                                     </CardItem>
                                     <CardItem>
                                         <Body>
-                                            <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/sugarandspice-34c66.appspot.com/o/posts%2Fbiryani.jpg?alt=media&token=1683cab5-2fbf-4d06-b155-4ff570ab7b77' }} style={{ height: 200, width: 200, flex: 1 }} />
-                                            <Text>
-                                                {data.OrderDetails}-{data.OrderStatus}
-                                            </Text>
+                                            {data.OrderItems && data.OrderItems.map((d, i) => {
+                                                return (
+                                                    <Text>Name:{d.name} - Quantity:{d.quantity} - Price:{d.price}</Text>
+                                                )
+                                            })}
                                         </Body>
                                     </CardItem>
                                     <CardItem>
                                         <Left>
-                                            <Button textStyle={{ color: '#87838B' }} onPress={() => this.Accepted(data._id, data.Cancel, data.SNo, data.OrderStatus, data.OrderData, data.OrderNo, data.OrderDetails, data.OrderRestaurant)} >
-                                                <Text>Completed</Text>
+                                            <Button textStyle={{ color: '#87838B' }} onPress={() => this.Accepted(data)} >
+                                                <Text>Delivered</Text>
                                                 {/* <Icon name="logo-github" /> */}
                                             </Button>
                                         </Left>
