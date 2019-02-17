@@ -39,7 +39,7 @@ export default class Main extends Component {
         this.state = {
             // datacmgIn: [],
             // datacmgOrd: [],
-            // auth: this.props.navigation.state.params.auth,
+            driverName: this.props.navigation.state.params.driverName,
         }
         // this.Logout = this.Logout.bind(this);
     }
@@ -119,7 +119,7 @@ export default class Main extends Component {
                         <View style={{ width: "30%", height: width / 8 }}></View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity activeOpacity={1} onPress={() => this.props.navigation.navigate('NewOrders')} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => this.props.navigation.navigate('NewOrders',{dname:this.state.driverName})} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
                         <View style={{ width: "15%", height: width / 8 }}></View>
                         <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>New orders</Text>

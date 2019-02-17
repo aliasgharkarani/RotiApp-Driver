@@ -22,8 +22,9 @@ export default class NewOrders extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // checking: this.props.navigation.state.params.ordered1,
-            filtered1: []
+            // checking: this.props.navigation.state.params.dname,
+            filtered1: [],
+            Drivername: this.props.navigation.state.params.dname
         }
         this.Get = this.Get.bind(this);
         this.Accepted = this.Accepted.bind(this);
@@ -58,7 +59,7 @@ export default class NewOrders extends Component {
         //     "OrderRestaurant": `${OrderRestaurant}`,
         // }
         // console.log(payload);
-        fetch(`https://dry-coast-84806.herokuapp.com/api/order/${data._id}/asim`, {
+        fetch(`https://dry-coast-84806.herokuapp.com/api/order/${data._id}/${this.state.Drivername}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -74,14 +75,16 @@ export default class NewOrders extends Component {
                 <Container>
                     <Content>
                         {this.state.filtered1.map((data, i) => {
+                            // console.log(data, " data");
                             return (
                                 <Card style={{ flex: 0 }}>
                                     <CardItem>
                                         <Left>
                                             <Body>
                                                 <Text>
-                                                    Order Driver: {data.OrderDriver}
+                                                    DeliveryAddress: {data.DeliveryAddress}
                                                 </Text>
+                                                <Text>UserId:{data.UserId}</Text>
                                                 <Text>
                                                     Order Status: {data.OrderStatus}
                                                 </Text>
@@ -90,21 +93,23 @@ export default class NewOrders extends Component {
                                     </CardItem>
                                     <CardItem>
                                         <Body>
-                                            {data.OrderItems && data.OrderItems.map((d, i) => {
+                                            {data.OrderData && data.OrderData.map((d, i) => {
                                                 return (
-                                                    <Text>Name:{d.name} - Quantity:{d.quantity} - Price:{d.price}</Text>
+                                                    <Text>Res Name:{d.RestaurantName} - No.Of Items:{d.OrderItems.length} - Cost:{d.Cost}</Text>
                                                 )
                                             })}
                                         </Body>
                                     </CardItem>
                                     <CardItem>
                                         <Left>
-                                            <Button textStyle={{ color: '#87838B' }} onPress={() => this.Accepted(data)} >
-                                                <Text>Accepted</Text>
-                                                {/* <Icon name="logo-github" /> */}
-                                            </Button>
+                                            {this.state.Drivername != data.OrderDriver ?
+                                                <Button textStyle={{ color: '#87838B' }} onPress={() => this.Accepted(data)} >
+                                                    <Text>Accepted</Text>
+                                                    {/* <Icon name="logo-github" /> */}
+                                                </Button> : <Text>You have Accepted!</Text>
+                                            }
                                             {/* <Button textStyle={{ color: '#87838B' }}> */}
-                                                {/* <Text>Delivery Started</Text> */}
+                                            {/* <Text>Delivery Started</Text> */}
                                             {/* </Button> */}
                                         </Left>
                                     </CardItem>
