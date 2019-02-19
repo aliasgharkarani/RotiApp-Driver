@@ -52,7 +52,7 @@ export default class SignUp extends Component {
         }, 2500)
     }
     Get() {
-        fetch('https://dry-coast-84806.herokuapp.com/api/drivers', {
+        fetch('https://rotiappserver.herokuapp.com/api/drivers', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

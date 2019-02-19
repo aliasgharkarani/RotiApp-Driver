@@ -32,7 +32,7 @@ export default class InProcessOrders extends Component {
         this.Get();
     }
     Get() {
-        fetch(`https://dry-coast-84806.herokuapp.com/api/orders/DeliveryStarted`, {
+        fetch(`https://rotiappserver.herokuapp.com/api/orders/DeliveryStarted`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -47,16 +47,7 @@ export default class InProcessOrders extends Component {
         ).catch(error => alert("No Orders"));
     }
     Accepted(data) {
-        // let payload = {
-        //     "Cancel": Cancel,
-        //     "SNo": `${SNo}`,
-        //     "OrderStatus": "Delivered",
-        //     "OrderData": `${OrderData}`,
-        //     "OrderNo": `${OrderNo}`,
-        //     "OrderDetails": `${OrderDetails}`,
-        //     "OrderRestaurant": `${OrderRestaurant}`
-        // }
-        fetch(`https://dry-coast-84806.herokuapp.com/api/orders/${data._id}/Delivered`, {
+        fetch(`https://rotiappserver.herokuapp.com/api/orders/${data._id}/Delivered`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -72,6 +63,7 @@ export default class InProcessOrders extends Component {
                 <Container>
                     <Content>
                         {this.state.filtered1.map((data, i) => {
+                            console.log(data, " data");
                             return (
                                 <Card style={{ flex: 0 }}>
                                     <CardItem>
@@ -83,14 +75,19 @@ export default class InProcessOrders extends Component {
                                                 <Text>
                                                     Order Status: {data.OrderStatus}
                                                 </Text>
+                                                <Text>
+                                                    Delivery Address: {data.DeliveryAddress}
+                                                </Text>
                                             </Body>
                                         </Left>
                                     </CardItem>
                                     <CardItem>
                                         <Body>
-                                            {data.OrderItems && data.OrderItems.map((d, i) => {
+                                            {data.OrderData && data.OrderData.map((d, i) => {
                                                 return (
-                                                    <Text>Name:{d.name} - Quantity:{d.quantity} - Price:{d.price}</Text>
+                                                    <View style={{ borderBottomColor: "red", borderBottomWidth: 1 }}>
+                                                        <Text>RestaurantName:{d.RestaurantName} </Text><Text> OrderItems:{d.OrderItems.length} </Text><Text> Cost:{d.Cost}</Text>
+                                                    </View>
                                                 )
                                             })}
                                         </Body>

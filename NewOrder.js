@@ -33,7 +33,7 @@ export default class NewOrders extends Component {
         this.Get();
     }
     Get() {
-        fetch(`https://dry-coast-84806.herokuapp.com/api/orders/AcceptedbyRestaurant`, {
+        fetch(`https://rotiappserver.herokuapp.com/api/orders/AcceptedbyRestaurant`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -48,18 +48,7 @@ export default class NewOrders extends Component {
         ).catch(error => alert("No Orders"));
     }
     Accepted(data) {
-        // let payload = {
-        //     "Cancel": Cancel,
-        //     "SNo": `${SNo}`,
-        //     "OrderStatus": `${OrderStatus}`,
-        //     "OrderDriver": "Ali",
-        //     "OrderData": `${OrderData}`,
-        //     "OrderNo": `${OrderNo}`,
-        //     "OrderDetails": `${OrderDetails}`,
-        //     "OrderRestaurant": `${OrderRestaurant}`,
-        // }
-        // console.log(payload);
-        fetch(`https://dry-coast-84806.herokuapp.com/api/order/${data._id}/${this.state.Drivername}`, {
+        fetch(`https://rotiappserver.herokuapp.com/api/order/${data._id}/${this.state.Drivername}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -88,6 +77,9 @@ export default class NewOrders extends Component {
                                                 <Text>
                                                     Order Status: {data.OrderStatus}
                                                 </Text>
+                                                <Text>
+                                                    Delivery Address: {data.DeliveryAddress}
+                                                </Text>
                                             </Body>
                                         </Left>
                                     </CardItem>
@@ -95,7 +87,9 @@ export default class NewOrders extends Component {
                                         <Body>
                                             {data.OrderData && data.OrderData.map((d, i) => {
                                                 return (
-                                                    <Text>Res Name:{d.RestaurantName} - No.Of Items:{d.OrderItems.length} - Cost:{d.Cost}</Text>
+                                                    <View style={{ borderBottomColor: "red", borderBottomWidth: 1 }}>
+                                                        <Text>Res Name:{d.RestaurantName}</Text> <Text> No.Of Items:{d.OrderItems.length} </Text><Text> Cost:{d.Cost}</Text>
+                                                    </View>
                                                 )
                                             })}
                                         </Body>

@@ -31,7 +31,7 @@ export default class CompletedOrders extends Component {
         this.Get();
     }
     Get() {
-        fetch(`https://dry-coast-84806.herokuapp.com/api/orders/Delivered`, {
+        fetch(`https://rotiappserver.herokuapp.com/api/orders/Delivered`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -62,14 +62,19 @@ export default class CompletedOrders extends Component {
                                                 <Text>
                                                     Order Status: {data.OrderStatus}
                                                 </Text>
+                                                <Text>
+                                                    Delivery Address: {data.DeliveryAddress}
+                                                </Text>
                                             </Body>
                                         </Left>
                                     </CardItem>
                                     <CardItem>
                                         <Body>
-                                            {data.OrderItems && data.OrderItems.map((d, i) => {
+                                            {data.OrderData && data.OrderData.map((d, i) => {
                                                 return (
-                                                    <Text>Name:{d.name} - Quantity:{d.quantity} - Price:{d.price}</Text>
+                                                    <View style={{ borderBottomColor: "red", borderBottomWidth: 1 }}>
+                                                        <Text>RestaurantName:{d.RestaurantName} </Text><Text> OrderItems:{d.OrderItems.length} </Text><Text> Cost:{d.Cost}</Text>
+                                                    </View>
                                                 )
                                             })}
                                         </Body>
