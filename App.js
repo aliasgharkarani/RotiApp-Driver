@@ -7,6 +7,10 @@ import NewOrders from './NewOrder'
 import InProcessOrders from './InProcess'
 import CompletedOrders from './Delivered'
 import SignIn from './SignIn'
+import ThisWeekIncome from './ThisWeekIncome'
+import ThisMonthIncome from './ThisMonthIncome'
+import TotalAmount from './TotalAmount'
+import updateprofile from './updateprofile'
 // import SignUp from './SignUp'
 // import AddProduct from './AddProduct'
 // import ViewProduct from './ViewProduct'
@@ -81,6 +85,30 @@ const AppNavigator = createStackNavigator({
     navigationOptions: {
       header: null,
     }
+  },
+  ThisWeekIncome: {
+    screen: ThisWeekIncome,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  ThisMonthIncome: {
+    screen: ThisMonthIncome,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  TotalAmount: {
+    screen: TotalAmount,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  updateprofile:{
+    screen: updateprofile,
+    navigationOptions: {
+      header: null,
+    } 
   }
 });
 

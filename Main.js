@@ -19,6 +19,7 @@ import {
     BackHandler,
     Alert
 } from 'react-native';
+import { AsyncStorage } from 'react-native';
 // import { Content, Container, Thumbnail, CardItem, Left, Body, Right, Footer, FooterTab, Button, Icon, Textarea, Toast, Header } from "native-base"
 import { Container, Header, Title, Button, Left, Right, Body, Icon } from 'native-base';
 const { height, width, fontScale } = Dimensions.get('window');
@@ -41,7 +42,7 @@ export default class Main extends Component {
             // datacmgOrd: [],
             driverName: this.props.navigation.state.params.driverName,
         }
-        // this.Logout = this.Logout.bind(this);
+        this.Logout = this.Logout.bind(this);
     }
 
     // componentDidMount() {
@@ -99,6 +100,14 @@ export default class Main extends Component {
     //     })
     //     this.props.navigation.navigate('SignIn')
     // }
+    Logout() {
+        // this.setState({
+        //     auth: false
+        // })
+        this.props.navigation.navigate('SignIn')
+        AsyncStorage.removeItem('name');
+        // AsyncStorage.setItem('auth', 0);            
+    }
     render() {
         return (
             <Container>
@@ -142,7 +151,7 @@ export default class Main extends Component {
                         </View>
                         <View style={{ width: "15%", height: width / 8 }}></View>
                     </TouchableOpacity>
-
+{/* 
                     <View style={{ marginTop: "1%", height: width / 8, display: "flex", flexDirection: "row", backgroundColor: "#f7f7f7" }}>
                         <View style={{ width: "70%", height: width / 8, alignSelf: "center", display: "flex", justifyContent: "center", marginLeft: "4%" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>Menu Management</Text>
@@ -156,61 +165,62 @@ export default class Main extends Component {
                             <Text style={{ fontSize: 20, color: "#C21807" }}>My menu list</Text>
                         </View>
                         <View style={{ width: "15%", height: width / 8 }}></View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
-                    <View style={{ marginTop: "1%", height: width / 8, display: "flex", flexDirection: "row", backgroundColor: "#f7f7f7" }}>
+                    <View style={{marginTop: "1%", height: width / 8, display: "flex", flexDirection: "row", backgroundColor: "#f7f7f7" }}>
                         <View style={{ width: "70%", height: width / 8, alignSelf: "center", display: "flex", justifyContent: "center", marginLeft: "4%" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>My Earnings</Text>
                         </View>
                         <View style={{ width: "30%", height: width / 8 }}></View>
                     </View>
 
-                    <View style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ThisWeekIncome', { ordered1: this.props.navigation.state.params.driverName})} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
                         <View style={{ width: "15%", height: width / 8 }}></View>
                         <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>This week's income</Text>
                         </View>
                         <View style={{ width: "15%", height: width / 8 }}></View>
-                    </View>
-                    <View style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ThisMonthIncome', { ordered1: this.props.navigation.state.params.driverName})} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
                         <View style={{ width: "15%", height: width / 8 }}></View>
                         <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center" }}>
-                            <Text style={{ fontSize: 20, color: "#C21807" }}>Last week's income</Text>
+                            <Text style={{ fontSize: 20, color: "#C21807" }}>This Months income</Text>
                         </View>
                         <View style={{ width: "15%", height: width / 8 }}></View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('TotalAmount', { ordered1: this.props.navigation.state.params.driverName})} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
                         <View style={{ width: "15%", height: width / 8 }}></View>
                         <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>Total income</Text>
                         </View>
                         <View style={{ width: "15%", height: width / 8 }}></View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={{ marginTop: "1%", height: width / 8, display: "flex", flexDirection: "row", backgroundColor: "#f7f7f7" }}>
-                        <View style={{ width: "70%", height: width / 8, alignSelf: "center", marginLeft: "4%" }}>
-                            <Text style={{ fontSize: 20, color: "#C21807", display: "flex", justifyContent: "center" }}>My Profile</Text>
+                    <View style={{ marginTop: "1%",height: width / 8, display: "flex", backgroundColor: "#f7f7f7", flexDirection: "row" }}>
+                          <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center", alignSelf: "center", marginLeft: "4%" }}>
+                            <Text style={{ fontSize: 20, color: "#C21807" }}>My Profile</Text>
                         </View>
                         <View style={{ width: "30%", height: width / 8 }}></View>
                     </View>
 
-                    <View style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => this.props.navigation.navigate('updateprofile', { ordered1: this.props.navigation.state.params.driverName})} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }} style={{ marginTop: "1%", height: width / 8, backgroundColor: "#f7f7f7", display: "flex", flexDirection: "row" }}>
                         <View style={{ width: "15%", height: width / 8 }}></View>
                         <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>Update profile</Text>
                         </View>
                         <View style={{ width: "15%", height: width / 8 }}></View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={{ marginTop: "1%", height: width / 8, display: "flex", backgroundColor: "#f7f7f7", flexDirection: "row" }}>
+                    <View style={{ marginTop: "1%",height: width / 8, display: "flex", backgroundColor: "#f7f7f7", flexDirection: "row" }}>
                         <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center", alignSelf: "center", marginLeft: "4%" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>Help and support</Text>
                         </View>
                         <View style={{ width: "30%", height: width / 8 }}></View>
                     </View>
 
-                    <TouchableOpacity activeOpacity={1} style={{ marginTop: "1%", height: width / 8, display: "flex", backgroundColor: "#f7f7f7", flexDirection: "row" }}>
+                    <TouchableOpacity activeOpacity={1} onPress={() => this.Logout()} style={{ marginTop: "1%",height: width / 8, display: "flex", backgroundColor: "#f7f7f7", flexDirection: "row" }}>
                         <View style={{ width: "70%", height: width / 8, display: "flex", justifyContent: "center", alignSelf: "center", marginLeft: "4%" }}>
                             <Text style={{ fontSize: 20, color: "#C21807" }}>Log out</Text>
                         </View>
@@ -230,6 +240,7 @@ export default class Main extends Component {
                         </View>
                         <View style={{ width: "25%", height: width / 8 }}></View>
                     </View>
+
 
                 </ScrollView>
             </Container>
