@@ -33,21 +33,12 @@ export default class updateprofile extends Component {
         super(props);
         this.state = {
             // avatarSource: "https://firebasestorage.googleapis.com/v0/b/sugarandspice-34c66.appspot.com/o/posts%2Fbiryani.jpg?alt=media&token=1683cab5-2fbf-4d06-b155-4ff570ab7b77",
-            location: "",
-            restaurantname: "",
             firstname: "",
-            lastname: "",
-            yourtitle: "",
-            phoneno: "",
             email: "",
             Password: "",
-            noOflocations: "",
-            typeOfCuisine: "",
-            EstimatedWeeklyOrder: "",
-            CurrentlyOfferDelivery: false,
-            zipcode: "",
-            approved: false,
-            id:"",
+            mobile: "",
+            City: "",
+            id: "",
             checking: this.props.navigation.state.params.ordered1,
             datm: {}
         }
@@ -58,7 +49,7 @@ export default class updateprofile extends Component {
         this.Get();
     }
     Get() {
-        fetch(`https://rotiappserver.herokuapp.com/api/restaurants/${this.state.checking}`, {
+        fetch(`https://rotiappserver.herokuapp.com/api/drivers/${this.state.checking}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -67,207 +58,101 @@ export default class updateprofile extends Component {
             return response.json();
         }).then(data => {
             this.setState({
-                datm: data,
-                location: data.location,
-                restaurantname: data.restaurantname,
                 firstname: data.firstname,
-                lastname: data.lastname,
-                yourtitle: data.yourtitle,
-                phoneno: data.phoneno,
                 email: data.email,
                 Password: data.Password,
-                noOflocations: data.noOflocations,
-                typeOfCuisine: data.typeOfCuisine,
-                EstimatedWeeklyOrder: data.EstimatedWeeklyOrder,
-                CurrentlyOfferDelivery: data.CurrentlyOfferDelivery,
-                zipcode: data.zipcode,
-                id:data._id
+                mobile: data.mobile,
+                City: data.City,
+                id: data._id
             })
         }
         ).catch(error => alert(error));
     }
 
     Upload() {
-        if (this.state.location.length > 4) {
-            if (this.state.restaurantname.length > 3) {
-                if (this.state.firstname && this.state.lastname && this.state.zipcode && this.state.yourtitle && this.state.phoneno && this.state.email && this.state.Password && this.state.noOflocations && this.state.typeOfCuisine && this.state.noOflocations) {
-                    let payload = {
-                        "CurrentlyOfferDelivery": this.state.CurrentlyOfferDelivery,
-                        "ApprovedAccount": this.state.approved,
-                        "location": `${this.state.location}`,
-                        "restaurantname": `${this.state.restaurantname}`,
-                        "zipcode": `${this.state.zipcode}`,
-                        "firstname": `${this.state.firstname}`,
-                        "lastname": `${this.state.lastname}`,
-                        "yourtitle": `${this.state.yourtitle}`,
-                        "phoneno": `${this.state.phoneno}`,
-                        "email": `${this.state.email}`,
-                        "Password": `${this.state.Password}`,
-                        "noOflocations": `${this.state.noOflocations}`,
-                        "typeOfCuisine": `${this.state.typeOfCuisine}`,
-                        "EstimatedWeeklyOrder": `${this.state.EstimatedWeeklyOrder}`
-                    }
-                    fetch(`https://rotiappserver.herokuapp.com/api/restaurants/${this.state.id}`, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(payload)
-                    }).then(function (response) {
-                        return response.json();
-                    }).then(data => {
-                        this.setState({
-                            location: "",
-                            restaurantname: "",
-                            firstname: "",
-                            lastname: "",
-                            yourtitle: "",
-                            phoneno: "",
-                            email: "",
-                            noOflocations: "",
-                            typeOfCuisine: "",
-                            EstimatedWeeklyOrder: "",
-                            CurrentlyOfferDelivery: false,
-                            zipcode: "",
-                            approved: false,
-                            Password: ""
-                        })
-                        alert("Changes Applied");
-                        this.Get();
-                        // this.props.navigation.navigate('SignIn')
-                    }
-                    ).catch(error => alert(error));
+        // if (this.state.mobile.length > 4) {
+        if (this.state.City.length > 3) {
+            if (this.state.firstname && this.state.mobile && this.state.Password) {
+                let payload = {
+                    "firstname": `${this.state.firstname}`,
+                    "email": `${this.state.email}`,
+                    "Password": `${this.state.Password}`,
+                    "mobile": `${this.state.mobile}`,
+                    "City": `${this.state.City}`,
                 }
-                else {
-                    alert("you have not completed the form");
+                fetch(`https://rotiappserver.herokuapp.com/api/drivers/${this.state.id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload)
+                }).then(function (response) {
+                    return response.json();
+                }).then(data => {
+                    this.setState({
+                        firstname: "",
+                        mobile: "",
+                        email: "",
+                        City: "",
+                        Password: ""
+                    })
+                    alert("Changes Applied");
+                    this.Get();
                 }
+                ).catch(error => alert(error));
             }
             else {
-                alert("Enter Valid Restrurant Name");
+                alert("you have not completed the form");
             }
         }
         else {
-            alert("Enter Valid Location");
+            alert("Enter Valid Info");
         }
-
+        // }
+        // else {
+        //     alert("Enter Valid Location");
+        // }
     }
     render() {
         return (
             <View style={styles.container}>
                 <View style={{ display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
                     <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 2.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(location) => this.setState({ location })}
-                        value={this.state.location}
-                        placeholder="location"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, width: width / 2.3, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(restaurantname) => this.setState({ restaurantname })}
-                        value={this.state.restaurantname}
-                        placeholder="restaurantname"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                </View>
-                <View style={{ marginTop: 2, display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 2.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
+                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 1.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
                         onChangeText={(firstname) => this.setState({ firstname })}
                         value={this.state.firstname}
-                        placeholder="firstname"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, width: width / 2.3, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(lastname) => this.setState({ lastname })}
-                        value={this.state.lastname}
-                        placeholder="lastname"
+                        placeholder="firstName"
                         placeholderTextColor="#ffffff"
                         autoCapitalize='none'
                     />
                 </View>
-                <View style={{ marginTop: 2, display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
+                <View style={{ display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
                     <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 2.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(yourtitle) => this.setState({ yourtitle })}
-                        value={this.state.yourtitle}
-                        placeholder="yourtitle"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, width: width / 2.3, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(phoneno) => this.setState({ phoneno })}
-                        value={this.state.phoneno}
-                        placeholder="phoneno"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                </View>
-                <View style={{ marginTop: 2, display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 2.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
+                        style={{ fontWeight: "bold", height: width / 7, width: width / 1.1, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
                         onChangeText={(email) => this.setState({ email })}
                         value={this.state.email}
                         placeholder="email"
                         placeholderTextColor="#ffffff"
                         autoCapitalize='none'
                     />
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, width: width / 2.3, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(noOflocations) => this.setState({ noOflocations })}
-                        value={this.state.noOflocations}
-                        placeholder="noOflocations"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
                 </View>
+
                 <View style={{ marginTop: 2, display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
                     <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 2.3, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(typeOfCuisine) => this.setState({ typeOfCuisine })}
-                        value={this.state.typeOfCuisine}
-                        placeholder="typeOfCuisine"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, width: width / 2.1, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(EstimatedWeeklyOrder) => this.setState({ EstimatedWeeklyOrder })}
-                        value={this.state.EstimatedWeeklyOrder}
-                        placeholder="EstimatedWeeklyOrder"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                </View>
-                <View style={{ marginTop: 2, display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 2.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(CurrentlyOfferDelivery) => this.setState({ CurrentlyOfferDelivery })}
-                        value={this.state.CurrentlyOfferDelivery}
-                        placeholder="CurrentlyOfferDelivery"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, width: width / 2.3, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
-                        onChangeText={(zipcode) => this.setState({ zipcode })}
-                        value={this.state.zipcode}
-                        placeholder="zipcode"
-                        placeholderTextColor="#ffffff"
-                        autoCapitalize='none'
-                    />
-                </View>
-                <View style={{ marginTop: 2, display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
-                    <TextInput
-                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 2.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
+                        style={{ fontWeight: "bold", height: width / 7, backgroundColor: "rgba(100,200,150,0.5)", width: width / 1.1, color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
                         onChangeText={(Password) => this.setState({ Password })}
                         value={this.state.Password}
                         placeholder="Password"
+                        placeholderTextColor="#ffffff"
+                        autoCapitalize='none'
+                    />
+                </View>
+                <View style={{ marginTop: 2, display: 'flex', flexDirection: 'row', width: width / 1.1, height: width / 7, alignSelf: "center" }}>
+                    <TextInput
+                        style={{ fontWeight: "bold", height: width / 7, width: width / 1.1, backgroundColor: "rgba(100,200,150,0.5)", color: "#ffffff", fontSize: fontScale * 25, paddingRight: "2%", paddingLeft: "2%" }}
+                        onChangeText={(mobile) => this.setState({ mobile })}
+                        value={this.state.mobile}
+                        placeholder="mobile"
                         placeholderTextColor="#ffffff"
                         autoCapitalize='none'
                     />
